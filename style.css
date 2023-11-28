@@ -40,10 +40,11 @@ body{
 }
 
 .search button{
+    display: center;
     border:0;
     outline: 0;
     background: #ebfffc;
-    border-radius: 50%;
+    border-radius: 30%;
     width: 60px;
     height: 60px;
     cursor: pointer;
@@ -53,6 +54,11 @@ body{
     width: 16px;
 }
 
+.cityName{
+    padding:20px;
+    margin: auto;
+}
+
 .day{
     padding:20px;
     margin: auto;
@@ -60,24 +66,41 @@ body{
 
 .formatdate{
     padding: 10px;
-    /* font-size: 20px; */
+    font-size: 15px;
 }
 
 .weather-icon{
-    width: 170px;
-    margin-top: 30px;
-
+    width: 125px;
+    margin-top: 20px;
 }
 
 .weather h1{
-    font-size: 80px;
-    font-weight: 500;
+    font-size: 60px;
+    font-weight: 100;
 }
 
 .weather h2{
     font-size: 45px;
     font-weight: 400;
     margin-top: -10px;
+}
+
+.sunrisetime{
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.sunsettime{
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.dawn{
+    font-size: 20px;
+}
+
+.dusk{
+    font-size: 20px;
 }
 
 .details{
@@ -104,3 +127,8 @@ body{
     margin-top: -6px;
 }
 
+@media screen and (max-width: 768px) {
+    #container {
+        padding: 20px;
+    }
+}
