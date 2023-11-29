@@ -39,6 +39,7 @@ function getGeoData() {
 function webdata(lat, lon){
     const todayurl = `https://api.sunrisesunset.io/json?lat=${lat}&lng=${lon}&date=today`;
     const tomorrowurl = `https://api.sunrisesunset.io/json?lat=${lat}&lng=${lon}&date=tomorrow`;
+    const getcitynameurl = `https://geocode.maps.co/reverse?lat=${lat}&lon=${lon}`;
 
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const months = [
@@ -108,6 +109,18 @@ function webdata(lat, lon){
         console.error('Error:', error);
         // Handle errors and display a message to the user
         alert('Error fetching sunrise/sunset data. Please try again.');
+    });
+
+    fetch(getcitynameurl)
+    .then(response => response.json())
+    .then(data=>{
+        console.log(data);
+        document.querySelector('#cityName').innerHTML = data.address.city + ', ' + data.address.country;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors and display a message to the user
+        alert('Error fetching city name. Please try again.');
     });
 
 }
