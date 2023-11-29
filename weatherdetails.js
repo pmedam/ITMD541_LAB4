@@ -15,6 +15,12 @@ function getGeoData() {
         })
         .then(data => {
 
+            if(data.length==0){
+                alert("Invalid city name");
+                document.getElementById('searchbar').value=""
+                return;
+            }
+
             console.log(data);
             const lat = data[0].lat;
             const lon = data[0].lon;
@@ -105,6 +111,47 @@ function webdata(lat, lon){
     });
 
 }
+
+function getCurrentLocation() {
+    // Check if geolocation is supported by the browser
+    if (navigator.geolocation) {
+      // Get the current position
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          // Extract latitude and longitude from the position object
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+  
+          // Do something with the latitude and longitude
+          console.log("Latitude: " + lat);
+          console.log("Longitude: " + lon);
+          webdata(lat, lon);
+        },
+        function(error) {
+          // Handle errors, if any
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              console.error("User denied the request for geolocation.");
+              break;
+            case error.POSITION_UNAVAILABLE:
+              console.error("Location information is unavailable.");
+              break;
+            case error.TIMEOUT:
+              console.error("The request to get user location timed out.");
+              break;
+            case error.UNKNOWN_ERROR:
+              console.error("An unknown error occurred.");
+              break;
+          }
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  }
+  
+
+  
 
 // // Calling the getData function and handling the promise it returns
 // getGeoData()
