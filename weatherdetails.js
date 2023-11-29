@@ -3,11 +3,10 @@ function getGeoData() {
     // Coordinates for New York
 
     //  const address = "Chicago, IL, USA";
-    const searchElement = document.getElementById(searchbar);
+    const searchElement = document.getElementById('searchbar').value;
     // const searchValue = searchElement.value;
 
-
-    const url=`https://geocode.maps.co/search?q=${searchElement}`;
+        const url=`https://geocode.maps.co/search?q=${searchElement}`;
 
     return fetch(url)
         .then(response => {
@@ -15,6 +14,8 @@ function getGeoData() {
             return response.json();
         })
         .then(data => {
+
+            console.log(data);
             const lat = data[0].lat;
             const lon = data[0].lon;
 
@@ -31,7 +32,7 @@ function getGeoData() {
 
 function webdata(lat, lon){
     const todayurl = `https://api.sunrisesunset.io/json?lat=${lat}&lng=${lon}&date=today`;
-    const tomorrowurl = `https://api.sunrisesunset.io/json?lat=${lat}&lng=${lon}&date=today`;
+    const tomorrowurl = `https://api.sunrisesunset.io/json?lat=${lat}&lng=${lon}&date=tomorrow`;
 
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const months = [
@@ -39,6 +40,7 @@ function webdata(lat, lon){
     ];
   
     const today = new Date();
+    //date for today
     const dayOfWeek = daysOfWeek[today.getDay()];
     const month = months[today.getMonth()];
     const day = today.getDate();
@@ -46,6 +48,19 @@ function webdata(lat, lon){
   
     const formattedDate = `${dayOfWeek}, ${month} ${day}, ${year}`;
     console.log(formattedDate);
+    
+    // date for tomorrow
+
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const dayOfWeek1 = daysOfWeek[tomorrow.getDay()];
+    const month1 = months[tomorrow.getMonth()];
+    const day1 = tomorrow.getDate();
+    const year1 = tomorrow.getFullYear();
+
+    const formattedDate1 = `${dayOfWeek1}, ${month1} ${day1}, ${year1}`;
+    console.log(formattedDate1);
   
     fetch(todayurl)
     .then(response => response.json())
@@ -72,6 +87,15 @@ function webdata(lat, lon){
     .then(response => response.json())
     .then(data => {
         console.log(data.results);
+
+        document.querySelector('#Tomorrow').innerHTML = formattedDate1;
+        document.querySelector('#tmrsrtime').innerHTML = data.results.sunrise;
+        document.querySelector('#tmrdawn').innerHTML = data.results.dawn;
+        document.querySelector('#tmrsstime').innerHTML = data.results.sunset;
+        document.querySelector('#tmrdusk').innerHTML = data.results.dusk;
+        document.querySelector('#tmrsolarnoon').innerHTML = data.results.solar_noon;
+        document.querySelector('#tmrdaylength').innerHTML = data.results.day_length;
+        document.querySelector('#tmrtimezone').innerHTML = data.results.timezone;
 
     })  
     .catch(error => {
